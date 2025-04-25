@@ -26,15 +26,11 @@ A **scalable**, **modular**, and **production-ready** REST API boilerplate using
 
 Clone the Repo 
  ```sh
-$ git clone https://github.com/ScremingAlien/vite-frontend-template-for-production-grade-project.git
+git clone https://github.com/ScremingAlien/express-rest-api-production-grade-project.git
 
-$ git clone https://github.com/ScremingAlien/express-rest-api-production-grade-project.git
+cd express-rest-api-production-grade-project
 
-$ cd express-rest-api-production-grade-project
-
-$ npm install
-
-
+npm install
 ```
 
 ---
@@ -43,7 +39,7 @@ $ npm install
 
  ```sh
 
-$ npm run dev
+npm run dev
 
 ```
 
@@ -53,7 +49,7 @@ $ npm run dev
 
  ```sh
 
-$ npm run start
+npm run start
 
 ```
 
