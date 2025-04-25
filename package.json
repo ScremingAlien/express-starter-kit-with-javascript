@@ -1,0 +1,29 @@
+{
+  "name": "backend-rest-api-template",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Full Express Production grade setup for rest-apis",
+  "main": "./src/server.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon src/server.js",
+    "start": "cross-env NODE_ENV=production node src/server.js"
+  },
+  "keywords": [
+    "Express",
+    "template"
+  ],
+  "author": "dhirajsuthar781",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
