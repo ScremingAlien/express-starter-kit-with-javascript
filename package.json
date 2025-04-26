@@ -6,7 +6,8 @@
   "main": "./src/server.js",
   "scripts": {
     "dev": "  nodemon src/server.js --development",
-    "start": "  node src/server.js --production"
+    "start": "  node src/server.js --production",
+     "cm": "node scripts/createModule.js"
   },
   "keywords": [
     "Express",

@@ -1,12 +1,11 @@
-import TodoService from '../services/TodoService.js';
- 
-
+import TodoService from './todo.service.js';
+  
 export default class TodoController {
 
   constructor() {
     this.todoService = new TodoService();
   }
-
+  
   /* 
   
   // for injecting service (Model)
