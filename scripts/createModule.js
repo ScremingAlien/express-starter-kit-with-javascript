@@ -30,12 +30,12 @@ fs.mkdirSync(modulePath, { recursive: true });
 const files = {
   [`${moduleName}.controller.js`]: 
 `import ${ModuleName}Service from "./${moduleName}.service.js";
-
+ 
 export default class ${ModuleName}Controller {
   constructor() {
-    this.${moduleName}Service = new ${ModuleName}Service();
+    this.${moduleName}Service =  ${ModuleName}Service;
   }
-
+  
   getAll = async (req, res, next) => {
     try {
       res.success({ message: "Success" });
@@ -46,20 +46,34 @@ export default class ${ModuleName}Controller {
 }
 `,
   [`${moduleName}.service.js`]: 
-`export default class ${ModuleName}Service {
+` class ${ModuleName}Service {
   constructor() {}
+
+  /*
+  //-- Dependency Injection
+  constructor() {
+    this.TODO = todoModel;
+  }
+  */
 
   async getAll() {
     return [];
   }
 }
+
+export default new ${ModuleName}Service();
 `,
+
+
   [`${moduleName}.model.js`]: 
 `// Define your ${moduleName} models here
 `,
+
   [`${moduleName}.routes.js`]: 
 `import { Router } from 'express';
 import ${ModuleName}Controller from './${moduleName}.controller.js';
+import validate from '../../middlewares/validate.js';
+import rateLimiter from '../../middlewares/rateLimiter.js';
 
 const router = Router();
 const ${moduleName}Controller = new ${ModuleName}Controller();
@@ -67,7 +81,21 @@ const ${moduleName}Controller = new ${ModuleName}Controller();
 router.get('/', ${moduleName}Controller.getAll);
 
 export default router;
+`,
+
+
+[`${moduleName}.validator.js`]: 
 `
+import { z } from 'zod';
+/*
+export const create${ModuleName}Schema = z.object({
+  body: z.object({
+    title: z.string().min(1, "Title is required"),
+  }),
+});
+*/
+`
+ 
 };
 
 // Write files inside new module

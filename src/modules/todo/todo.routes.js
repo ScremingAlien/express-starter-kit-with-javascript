@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import TodoController from './todo.controller.js';
 import validate from '../../middlewares/validate.js';
-import { createTodoSchema } from '../../validators/todo.validator.js';
 import rateLimiter from '../../middlewares/rateLimiter.js';
+import { createTodoSchema } from './todo.validator.js';
 
 
 const router = Router();

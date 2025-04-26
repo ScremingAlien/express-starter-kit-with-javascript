@@ -10,8 +10,7 @@ import connectDB from './config/db.js';
 
 // import your routes here from src/modules
 import todoRoutes from './modules/todo/todo.routes.js';
-
-
+ 
 const app = express();
 app.use(helmet());
 app.use(morgan('dev'));

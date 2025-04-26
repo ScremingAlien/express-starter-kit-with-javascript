@@ -1,23 +1,17 @@
 import TodoService from './todo.service.js';
-  
+
 export default class TodoController {
 
   constructor() {
-    this.todoService = new TodoService();
+    this.todoService = TodoService;
   }
-  
-  /* 
-  
-  // for injecting service (Model)
-  constructor() {
-    this.todoService = new TodoService(TODO_MODEL);
-  }
-  */
+
+ 
 
   getAll = async (req, res, next) => {
     try {
       const todos = await this.todoService.getAll();
-      
+
       // res.fail('Todos not found');
       res.success(todos);
 
