@@ -5,8 +5,8 @@
   "description": "Full Express Production grade setup for rest-apis",
   "main": "./src/server.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "start": "cross-env NODE_ENV=production node src/server.js"
+    "dev": "  nodemon src/server.js --development",
+    "start": "  node src/server.js --production"
   },
   "keywords": [
     "Express",
