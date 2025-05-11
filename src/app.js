@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 
-import notFound from './middlewares/notFound.js';
-import errorHandler from './middlewares/errorHandler.js';
+import notFound from './middlewares/default/notFound.js';
+import errorHandler from './middlewares/default/errorHandler.js';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import { responseFormatter } from './middlewares/responseFormater.js';
+import { responseFormatter } from './middlewares/default/responseFormater.js';
 import connectDB from './config/db.js';
 
 // import your routes here from src/modules
@@ -24,6 +24,7 @@ app.use(responseFormatter);
 
 // inject your routes here
 app.use('/v1/api/todo', todoRoutes);
+ 
  
      
 app.use(notFound);

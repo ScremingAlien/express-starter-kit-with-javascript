@@ -72,8 +72,8 @@ export default new ${ModuleName}Service();
   [`${moduleName}.routes.js`]: 
 `import { Router } from 'express';
 import ${ModuleName}Controller from './${moduleName}.controller.js';
-import validate from '../../middlewares/validate.js';
-import rateLimiter from '../../middlewares/rateLimiter.js';
+import validate from '../../middlewares/default/validate.js';
+import rateLimiter from '../../middlewares/default/rateLimiter.js';
 
 const router = Router();
 const ${moduleName}Controller = new ${ModuleName}Controller();
