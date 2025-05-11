@@ -1,4 +1,5 @@
 import TodoService from './todo.service.js';
+import { statusCode } from '../../utils/constants/statusCode.js';
 
 export default class TodoController {
 
@@ -13,7 +14,7 @@ export default class TodoController {
       const todos = await this.todoService.getAll();
 
       // res.fail('Todos not found');
-      res.success(todos);
+      res.success(todos, statusCode.OK);
 
     } catch (err) {
       next(err);

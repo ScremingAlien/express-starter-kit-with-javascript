@@ -10,12 +10,18 @@ import connectDB from './config/db.js';
 
 // import your routes here from src/modules
 import todoRoutes from './modules/todo/todo.routes.js';
+import compression from 'compression';
  
 const app = express();
+
+// default middlewares
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
+app.use(compression());
+
+
 
 connectDB();
 

@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Read command line arguments (after "--")
 const args = process.argv.slice(2);
 
- 
+
 
 // Module name and paths
 const moduleName = args[0].replace('--', '').toLowerCase();
@@ -28,25 +28,28 @@ fs.mkdirSync(modulePath, { recursive: true });
 
 // Prepare default files
 const files = {
-  [`${moduleName}.controller.js`]: 
-`import ${ModuleName}Service from "./${moduleName}.service.js";
- 
+  [`${moduleName}.controller.js`]:
+    `import ${ModuleName}Service from "./${moduleName}.service.js";
+ import { statusCode } from '../../utils/constants/statusCode.js';
+
 export default class ${ModuleName}Controller {
   constructor() {
     this.${moduleName}Service =  ${ModuleName}Service;
   }
-  
+
   getAll = async (req, res, next) => {
     try {
-      res.success({ message: "Success" });
+            // res.fail('Todos not found');
+            res.success(todos, statusCode.OK);
+      
     } catch (err) {
       next(err);
     }
   };
 }
 `,
-  [`${moduleName}.service.js`]: 
-` class ${ModuleName}Service {
+  [`${moduleName}.service.js`]:
+    ` class ${ModuleName}Service {
   constructor() {}
 
   /*
@@ -65,12 +68,12 @@ export default new ${ModuleName}Service();
 `,
 
 
-  [`${moduleName}.model.js`]: 
-`// Define your ${moduleName} models here
+  [`${moduleName}.model.js`]:
+    `// Define your ${moduleName} models here
 `,
 
-  [`${moduleName}.routes.js`]: 
-`import { Router } from 'express';
+  [`${moduleName}.routes.js`]:
+    `import { Router } from 'express';
 import ${ModuleName}Controller from './${moduleName}.controller.js';
 import validate from '../../middlewares/default/validate.js';
 import rateLimiter from '../../middlewares/default/rateLimiter.js';
@@ -84,8 +87,8 @@ export default router;
 `,
 
 
-[`${moduleName}.validator.js`]: 
-`
+  [`${moduleName}.validator.js`]:
+    `
 import { z } from 'zod';
 /*
 export const create${ModuleName}Schema = z.object({
@@ -95,7 +98,7 @@ export const create${ModuleName}Schema = z.object({
 });
 */
 `
- 
+
 };
 
 // Write files inside new module
