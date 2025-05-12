@@ -40,7 +40,7 @@ export default class ${ModuleName}Controller {
   getAll = async (req, res, next) => {
     try {
             // res.fail('Todos not found');
-            res.success(todos, statusCode.OK);
+       res.success("Get All Todos",todos, statusCode.OK);
       
     } catch (err) {
       next(err);

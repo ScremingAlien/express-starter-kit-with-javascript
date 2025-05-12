@@ -14,8 +14,9 @@ export default class TodoController {
       const todos = await this.todoService.getAll();
 
       // res.fail('Todos not found');
-      res.success(todos, statusCode.OK);
 
+      res.success("Get All Todos",todos, statusCode.OK);
+      
     } catch (err) {
       next(err);
     }
