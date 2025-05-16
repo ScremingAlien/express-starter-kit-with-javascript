@@ -8,7 +8,7 @@ export function responseFormatter(req, res, next) {
                data: data,
           });
      };
-     
+          
      res.fail = (message = null, statusCode = 400, ...kwargs) => {
           res.status(statusCode).json({
                success: false,

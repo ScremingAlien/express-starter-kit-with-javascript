@@ -26,7 +26,7 @@ export default class TodoController {
     try {
       const { title } = req.body;
       const newTodo = await this.todoService.create(title);
-      res.success(newTodo);
+      res.success("New Todo Created Succesfully",newTodo);
 
     } catch (err) {
       next(err);
@@ -38,7 +38,7 @@ export default class TodoController {
     try {
       const { id } = req.params;
       await this.todoService.delete(id);
-      res.success({ message: 'Todo deleted successfully' });
+      res.success("Todo Deleted Successfully");
 
     } catch (err) {
       next(err);

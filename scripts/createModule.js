@@ -50,7 +50,7 @@ export default class ${ModuleName}Controller {
 `,
   [`${moduleName}.service.js`]:
     ` class ${ModuleName}Service {
-  constructor() {}
+   
 
   /*
   //-- Dependency Injection

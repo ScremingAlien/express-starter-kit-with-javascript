@@ -29,7 +29,7 @@ app.use(responseFormatter);
 
 
 // inject your routes here
-app.use('/v1/api/todo', todoRoutes);
+app.use('/api/v1/todo', todoRoutes);
  
  
      
