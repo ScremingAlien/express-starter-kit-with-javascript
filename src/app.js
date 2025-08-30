@@ -23,9 +23,7 @@ app.use(compression());
 
 connectDB();
 
-let o = {
-  de: "sfsdf",
-};
+ 
 app.use(responseFormatter);
 
 // inject your routes here
