@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "  nodemon src/server.js --development",
     "start": "  node src/server.js --production",
-    "cm": "node scripts/createModule.js"
+    "cm": "node scripts/createModule.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "keywords": [
     "Express",
@@ -27,6 +31,12 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2"
   }
 }

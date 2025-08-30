@@ -7,13 +7,12 @@ export default function validate(schema) {
     });
 
     if (!result.success) {
-      const formatted = result.error.errors.map(err => ({
-        field: err.path.join('.'),
+      const formatted = result.error.errors.map((err) => ({
+        field: err.path.join("."),
         message: err.message,
       }));
 
-      return res.fail('Validation failed', 400, { errors: formatted });
-    
+      return res.fail("Validation failed", 400, { errors: formatted });
     }
 
     req.validated = result.data;

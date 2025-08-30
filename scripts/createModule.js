@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-console.log('🚀 Creating new module...');
+console.log("🚀 Creating new module...");
 
 // Setup current directory
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -10,12 +10,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Read command line arguments (after "--")
 const args = process.argv.slice(2);
 
-
-
 // Module name and paths
-const moduleName = args[0].replace('--', '').toLowerCase();
+const moduleName = args[0].replace("--", "").toLowerCase();
 const ModuleName = capitalize(moduleName);
-const modulePath = path.join(__dirname, '../src/modules', moduleName);
+const modulePath = path.join(__dirname, "../src/modules", moduleName);
 
 // Check if module already exists
 if (fs.existsSync(modulePath)) {
@@ -28,8 +26,7 @@ fs.mkdirSync(modulePath, { recursive: true });
 
 // Prepare default files
 const files = {
-  [`${moduleName}.controller.js`]:
-    `import ${ModuleName}Service from "./${moduleName}.service.js";
+  [`${moduleName}.controller.js`]: `import ${ModuleName}Service from "./${moduleName}.service.js";
  import { statusCode } from '../../utils/constants/statusCode.js';
 import './${moduleName}.event.js'
 
@@ -61,8 +58,7 @@ export default class ${ModuleName}Controller {
 
 }
 `,
-  [`${moduleName}.service.js`]:
-    `
+  [`${moduleName}.service.js`]: `
     import eventBus from "../../utils/eventBus.js";
 
     class ${ModuleName}Service {
@@ -92,13 +88,10 @@ export default class ${ModuleName}Controller {
 export default new ${ModuleName}Service();
 `,
 
-
-  [`${moduleName}.model.js`]:
-    `// Define your ${moduleName} models here
+  [`${moduleName}.model.js`]: `// Define your ${moduleName} models here
 `,
 
-  [`${moduleName}.routes.js`]:
-    `import { Router } from 'express';
+  [`${moduleName}.routes.js`]: `import { Router } from 'express';
 import ${ModuleName}Controller from './${moduleName}.controller.js';
 import validate from '../../middlewares/default/validate.js';
 import rateLimiter from '../../middlewares/default/rateLimiter.js';
@@ -112,9 +105,7 @@ router.post("/", ${moduleName}Controller.create); // <-- new
 export default router;
 `,
 
-
-  [`${moduleName}.validator.js`]:
-    `
+  [`${moduleName}.validator.js`]: `
 import { z } from 'zod';
 /*
 export const create${ModuleName}Schema = z.object({
@@ -123,10 +114,8 @@ export const create${ModuleName}Schema = z.object({
   }),
 });
 */
-`
-  ,
-  [`${moduleName}.event.js`]:
-    `import eventBus from "../../utils/eventBus.js";
+`,
+  [`${moduleName}.event.js`]: `import eventBus from "../../utils/eventBus.js";
 
 /**
  * Listen for ${moduleName} events
@@ -136,7 +125,6 @@ eventBus.on("${moduleName}.created", (data) => {
 });
 
 `,
-
 };
 
 // Write files inside new module
