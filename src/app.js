@@ -7,7 +7,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import { responseFormatter } from './middlewares/default/responseFormater.js';
 import connectDB from './config/db.js';
-
+ 
 // import your routes here from src/modules
 import todoRoutes from './modules/todo/todo.routes.js';
 import compression from 'compression';

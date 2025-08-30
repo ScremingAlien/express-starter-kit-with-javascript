@@ -1,35 +1,28 @@
-// import your model
 
-class TodoService {
+    import eventBus from "../../utils/eventBus.js";
 
-  constructor() {
-    this.todos = [];
-    this.counter = 1;
-  }
+    class TodoService {
+   
 
   /*
-  //-- Dependency Injection
   constructor() {
     this.TODO = todoModel;
   }
   */
 
   async getAll() {
-    return this.todos;
+    return [];
   }
 
-  async create(title) {
-    const todo = { id: this.counter++, title };
-    this.todos.push(todo);
-    return todo;
+  async create(data) {
+    const newtodo = { id: Date.now(), ...data };
+ 
+    // Emit event
+    eventBus.emit("todo.created", newtodo);
+
+    return newtodo;
   }
 
-  async delete(id) {
-    const index = this.todos.findIndex(t => t.id === parseInt(id));
-    if (index === -1) throw new Error('Todo not found');
-    this.todos.splice(index, 1);
-  }
 }
-
 
 export default new TodoService();

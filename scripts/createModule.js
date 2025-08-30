@@ -31,6 +31,8 @@ const files = {
   [`${moduleName}.controller.js`]:
     `import ${ModuleName}Service from "./${moduleName}.service.js";
  import { statusCode } from '../../utils/constants/statusCode.js';
+import './${moduleName}.event.js'
+
 
 export default class ${ModuleName}Controller {
   constructor() {
@@ -46,14 +48,27 @@ export default class ${ModuleName}Controller {
       next(err);
     }
   };
+
+   create = async (req, res, next) => {
+    try {
+      const ${moduleName} = await this.${moduleName}Service.create(req.body); 
+      res.success("${moduleName} Created", ${moduleName}, statusCode.CREATED);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+
 }
 `,
   [`${moduleName}.service.js`]:
-    ` class ${ModuleName}Service {
+    `
+    import eventBus from "../../utils/eventBus.js";
+
+    class ${ModuleName}Service {
    
 
   /*
-  //-- Dependency Injection
   constructor() {
     this.TODO = todoModel;
   }
@@ -62,6 +77,16 @@ export default class ${ModuleName}Controller {
   async getAll() {
     return [];
   }
+
+  async create(data) {
+    const new${moduleName} = { id: Date.now(), ...data };
+ 
+    // Emit event
+    eventBus.emit("${moduleName}.created", new${moduleName});
+
+    return new${moduleName};
+  }
+
 }
 
 export default new ${ModuleName}Service();
@@ -82,6 +107,7 @@ const router = Router();
 const ${moduleName}Controller = new ${ModuleName}Controller();
 
 router.get('/', ${moduleName}Controller.getAll);
+router.post("/", ${moduleName}Controller.create); // <-- new
 
 export default router;
 `,
@@ -98,6 +124,18 @@ export const create${ModuleName}Schema = z.object({
 });
 */
 `
+  ,
+  [`${moduleName}.event.js`]:
+    `import eventBus from "../../utils/eventBus.js";
+
+/**
+ * Listen for ${moduleName} events
+ */
+eventBus.on("${moduleName}.created", (data) => {
+  console.log("📢  ${moduleName}.created event is Called !");
+});
+
+`,
 
 };
 
