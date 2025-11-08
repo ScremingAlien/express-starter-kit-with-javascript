@@ -5,13 +5,13 @@
   "description": "Full Express Production grade setup for rest-apis",
   "main": "./src/server.js",
   "scripts": {
-    "dev": "  nodemon src/server.js --development",
     "start": "  node src/server.js --production",
     "cm": "node scripts/createModule.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev": "npx nodemon src/server.js "
   },
   "keywords": [
     "Express",
@@ -22,10 +22,11 @@
   "dependencies": {
     "compression": "^1.8.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.1.0",
+    "mongoose": "^8.19.3",
     "morgan": "^1.10.0",
     "nodemailer": "^7.0.3",
     "zod": "^3.24.3"
