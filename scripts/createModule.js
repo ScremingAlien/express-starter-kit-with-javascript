@@ -64,11 +64,13 @@ export default class ${ModuleName}Controller {
     class ${ModuleName}Service {
    
 
-  /*
+
+
   constructor() {
-    this.TODO = todoModel;
+    // this.TODO = todoModel;
+    this.eventBus = eventBus;
   }
-  */
+
 
   async getAll() {
     return [];

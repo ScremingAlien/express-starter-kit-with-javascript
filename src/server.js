@@ -1,12 +1,41 @@
+// import "dotenv/config";
 import "./config/env.js";
+import { createServer } from "http";
 
-import { config } from "dotenv";
-config();
+import { createApp } from "./app.js";
+import { bootstrapApp } from "./bootstrap/index.js";
+import { logger } from "./infra/logger.js";
 
-import app from "./app.js";
+async function startServer() {
+  try {
+    //  Init infra dependencies
+    await bootstrapApp();
 
-const PORT = process.env.PORT || 8000;
+    //  Create HTTP app
+    const app = createApp();
+    const server = createServer(app);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV}`);
-});
+    const port = Number(process.env.PORT) || 3000;
+
+    server.listen(port, () => {
+      logger.info(`Server running on port ${port}`);
+    });
+
+    //  Graceful shutdown
+    const shutdown = async (signal) => {
+      logger.warn(`${signal} received. Shutting down...`);
+      server.close(() => {
+        logger.info("HTTP server closed");
+        process.exit(0);
+      });
+    };
+
+    process.on("SIGINT", shutdown);
+    process.on("SIGTERM", shutdown);
+  } catch (err) {
+    logger.fatal(err, "Startup failed");
+    process.exit(1);
+  }
+}
+
+startServer();

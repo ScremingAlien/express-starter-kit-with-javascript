@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { logger } from "../../infra/logger.js";
 
 export const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST, // e.g., smtp.gmail.com
@@ -12,9 +13,9 @@ export const transporter = nodemailer.createTransport({
 
 transporter.verify((error, success) => {
   if (error) {
-    console.error("Mail server connection failed:", error);
+    logger.fatal("Mail server connection failed:", error);
   } else {
-    console.log("Mail server is ready to take messages");
+    logger.info("Mail server is ready to take messages");
   }
 });
 
@@ -44,7 +45,7 @@ export class MailService {
         response: info.response,
       };
     } catch (error) {
-      console.error("Error sending email:", error);
+      logger.fatal("Error sending email:", error);
       throw new Error("Failed to send email");
     }
   }

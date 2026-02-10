@@ -1,5 +1,7 @@
+import { logger } from "../../infra/logger.js";
+
 export default function errorHandler(err, req, res, next) {
-  console.error(err.stack);
+  logger.fatal(err.stack);
   res.status(500).json({
     success: false,
     message: err.message || "Internal Server Error",

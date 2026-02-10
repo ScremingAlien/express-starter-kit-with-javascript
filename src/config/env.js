@@ -2,14 +2,40 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// get __dirname in ES modules
+import { logger } from "../infra/logger.js";
+
+// resolve dirname (ESM-safe)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const envFile = process.argv[2] === "--production" ? ".env.production" : ".env";
+// Decide env file
+const ENV_FILE = process.env.NODE_ENV === "production" ? ".env.production" : ".env";
 
+// Load env ASAP
 dotenv.config({
-  path: path.resolve(__dirname, `../../${envFile}`),
+  path: path.resolve(__dirname, `../../${ENV_FILE}`),
 });
 
-console.log(`✅ Loaded environment from ${envFile}`);
+// Small helper (runtime safety > TS types)
+function required(name) {
+  const value = process.env[name];
+  if (!value) {
+    logger.fatal(`Missing required env: ${name}`);
+    process.exit(1);
+  }
+  return value;
+}
+
+// Export normalized env config
+export const env = Object.freeze({
+  NODE_ENV: process.env.NODE_ENV ?? "development",
+
+  PORT: Number(process.env.PORT ?? 5000),
+
+  DB_URL: required("DB_URL"),
+  DB_NAME: process.env.DB_NAME,
+
+  // future-proof
+  SERVICE_NAME: process.env.SERVICE_NAME ?? "todo-service",
+  LOG_LEVEL: process.env.LOG_LEVEL ?? "info",
+});
