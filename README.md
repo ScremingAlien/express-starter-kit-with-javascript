@@ -21,21 +21,7 @@ A **scalable**, **modular**, and **production-ready** REST API boilerplate using
   - [How to Create a New Module](#how-to-create-a-new-module)
   - [Default Files and Structure](#default-files-and-structure)
 
----
-
-## [Installation](#installation)
-
-### Clone the Repository
-
-```sh
-git clone https://github.com/ScremingAlien/express-rest-api-production-grade-project.git
-
-cd express-rest-api-production-grade-project
-
-npm install
-```
-
----
+ 
 
 ## [Start Project in development](#startinDev)
 
@@ -112,6 +98,9 @@ The template includes a helper script to streamline the creation of new modules.
               ├── user.controller.js
               ├── user.service.js
               ├── user.model.js
+              └── user.event.js
+              └── user.repository.js
+              └── user.validator.js
               └── user.routes.js
     ```
 
