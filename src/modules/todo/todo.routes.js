@@ -6,7 +6,6 @@ import rateLimiter from "../../middlewares/default/rateLimiter.js";
 const router = Router();
 const todoController = new TodoController();
 
-router.get("/", todoController.getAll);
-router.post("/", todoController.create); // <-- new
+router.get("/", todoController.get);
 
 export default router;

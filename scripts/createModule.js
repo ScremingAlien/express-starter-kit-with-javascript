@@ -26,74 +26,60 @@ fs.mkdirSync(modulePath, { recursive: true });
 
 // Prepare default files
 const files = {
-  [`${moduleName}.controller.js`]: `import ${ModuleName}Service from "./${moduleName}.service.js";
- import { statusCode } from '../../utils/constants/statusCode.js';
-import './${moduleName}.event.js'
-
+  [`${moduleName}.controller.js`]: `
+ 
+import ${ModuleName}Service from "./${moduleName}.service.js";
+import { statusCode } from "../../utils/constants/statusCode.js";
+import { asyncHandler } from "../../middlewares/default/asyncHandler.js";
+import "./${moduleName}.event.js";
 
 export default class ${ModuleName}Controller {
   constructor() {
-    this.${moduleName}Service =  ${ModuleName}Service;
+    this.${moduleName}Service = ${ModuleName}Service;
   }
 
-  getAll = async (req, res, next) => {
-    try {
-            // res.fail('Todos not found');
-       res.success("Get All Todos",{ from: "${moduleName} Module" }, statusCode.OK);
-      
-    } catch (err) {
-      next(err);
-    }
-  };
+  get = asyncHandler(async (req, res) => {
+    const ${moduleName}s = await this.${moduleName}Service.getAll();
 
-   create = async (req, res, next) => {
-    try {
-      const ${moduleName} = await this.${moduleName}Service.create(req.body); 
-      res.success("${moduleName} Created", ${moduleName}, statusCode.CREATED);
-    } catch (err) {
-      next(err);
-    }
-  };
-
-
+    // res.fail('${ModuleName} not found');
+    res.success("Get All ${ModuleName}", ${moduleName}s, statusCode.OK);
+  });
 }
+ 
+
 `,
   [`${moduleName}.service.js`]: `
-    import eventBus from "../../utils/eventBus.js";
 
-    class ${ModuleName}Service {
-   
+import eventBus from "../../utils/eventBus.js";
+import { ${ModuleName}Repository } from "./${moduleName}.repository.js";
 
-
-
+class ${ModuleName}Service {
   constructor() {
-    // this.TODO = todoModel;
-    this.eventBus = eventBus;
+    this.${moduleName}Repository = new ${ModuleName}Repository(); // inject model
   }
-
 
   async getAll() {
-    return [];
+    const ${moduleName}s = await this.${moduleName}Repository.findAll();
+    return ${moduleName}s;
   }
 
-  async create(data) {
-    const new${moduleName} = { id: Date.now(), ...data };
- 
-    // Emit event
+  async create() {
+    const new${moduleName} = { id: Date.now(), title: "demo" };
     eventBus.emit("${moduleName}.created", new${moduleName});
-
     return new${moduleName};
   }
-
 }
 
 export default new ${ModuleName}Service();
+
 `,
 
   [`${moduleName}.model.js`]: `// Define your ${moduleName} models here
 `,
 
-  [`${moduleName}.routes.js`]: `import { Router } from 'express';
+  [`${moduleName}.routes.js`]: `
+
+import { Router } from 'express';
 import ${ModuleName}Controller from './${moduleName}.controller.js';
 import validate from '../../middlewares/default/validate.js';
 import rateLimiter from '../../middlewares/default/rateLimiter.js';
@@ -101,31 +87,44 @@ import rateLimiter from '../../middlewares/default/rateLimiter.js';
 const router = Router();
 const ${moduleName}Controller = new ${ModuleName}Controller();
 
-router.get('/', ${moduleName}Controller.getAll);
-router.post("/", ${moduleName}Controller.create); // <-- new
+router.get('/', ${moduleName}Controller.get);
 
 export default router;
+  
+
 `,
 
   [`${moduleName}.validator.js`]: `
-import { z } from 'zod';
-/*
+import { z } from "zod";
+
 export const create${ModuleName}Schema = z.object({
   body: z.object({
     title: z.string().min(1, "Title is required"),
   }),
 });
-*/
-`,
-  [`${moduleName}.event.js`]: `import eventBus from "../../utils/eventBus.js";
 
-/**
- * Listen for ${moduleName} events
- */
+
+`,
+  [`${moduleName}.event.js`]: `
+import eventBus from "../../utils/eventBus.js";
+ 
 eventBus.on("${moduleName}.created", (data) => {
   console.log("📢  ${moduleName}.created event is Called !");
 });
 
+`,
+
+  [`${moduleName}.repository.js`]: `
+export class ${ModuleName}Repository {
+  constructor(model) {
+    this.model = model;
+  }
+
+  async findAll() {
+    return [];
+  }
+}
+ 
 `,
 };
 

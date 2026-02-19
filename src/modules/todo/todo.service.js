@@ -1,22 +1,19 @@
 import eventBus from "../../utils/eventBus.js";
+import { TodoRepository } from "./todo.repository.js";
 
 class TodoService {
-  /*
   constructor() {
-    this.TODO = todoModel;
+    this.todoRepository = new TodoRepository(); // inject model
   }
-  */
 
   async getAll() {
-    return [];
+    const todos = await this.todoRepository.findAll();
+    return todos;
   }
 
-  async create(data) {
-    const newtodo = { id: Date.now(), ...data };
-
-    // Emit event
+  async create() {
+    const newtodo = { id: Date.now(), title: "demo" };
     eventBus.emit("todo.created", newtodo);
-
     return newtodo;
   }
 }
